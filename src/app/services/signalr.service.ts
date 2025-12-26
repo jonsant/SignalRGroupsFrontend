@@ -50,4 +50,11 @@ export class SignalRService {
     public isConnected(): boolean {
         return this.hubConnection?.state === signalR.HubConnectionState.Connected;
     }
+
+    public invokeHubMethod<T>(methodName: string, ...args: any[]): Promise<T> {
+        if (!this.hubConnection) {
+            return Promise.reject('No hub connection established');
+        }
+        return this.hubConnection.invoke<T>(methodName, ...args);
+    }
 }
