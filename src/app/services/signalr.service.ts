@@ -3,6 +3,7 @@ import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 import { Subject, Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -36,7 +37,7 @@ export class SignalRService {
 
     constructor() { }
 
-    public startConnection(hubUrl: string = 'https://localhost:7058/chatHub'): Promise<void> {
+    public startConnection(hubUrl: string = environment.hubUrl): Promise<void> {
         this.hubConnection = new signalR.HubConnectionBuilder()
             .withUrl(hubUrl)
             .withAutomaticReconnect()
