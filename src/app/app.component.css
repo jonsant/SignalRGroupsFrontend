@@ -158,3 +158,87 @@ h1 {
 .form-input::placeholder {
   color: #999;
 }
+
+.group-header {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  color: white;
+}
+
+.group-name-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.group-name-container label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+
+.group-name-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 12px 16px;
+  border-radius: 8px;
+  width: 100%;
+}
+
+.group-name {
+  font-size: 24px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  flex: 1;
+}
+
+.btn-copy {
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.btn-copy:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.btn-copy:active {
+  transform: scale(0.95);
+}
+
+.hint {
+  font-size: 11px;
+  opacity: 0.8;
+  margin-top: 4px;
+}
+
+.chat-container {
+  padding: 20px 0;
+}
+
+.chat-container h2 {
+  color: #333;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.welcome-message {
+  color: #666;
+  font-size: 14px;
+  margin-bottom: 20px;
+}

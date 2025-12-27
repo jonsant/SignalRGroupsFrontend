@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="group-header">
+        <div class="group-name-container">
+            <label>Group Name:</label>
+            <div class="group-name-display">
+                <span class="group-name">{{ groupName }}</span>
+                <button class="btn-copy" (click)="copyGroupName()" title="Copy group name">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                    </svg>
+                </button>
+            </div>
+            <small class="hint">Share this group name with friends to invite them</small>
+        </div>
+    </div>
+
+    <div class="chat-container">
+        <h2>Chat Room</h2>
+        <p class="welcome-message">Welcome, {{ username }}!</p>
+        <!-- Chat messages will go here -->
+    </div>
+</div>
