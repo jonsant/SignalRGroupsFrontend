@@ -19,12 +19,37 @@
     <div class="chat-container">
         <h2>Chat Room</h2>
         <p class="welcome-message">Welcome, {{ username }}!</p>
-        <div class="chat-messages">
+        <div class="chat-messages" #messagesContainer>
             @for (msg of chatMessages; track msg) {
             <div class="chat-message">
                 <strong>{{ msg.username }}:</strong> {{ msg.message }}
             </div>
             }
+        </div>
+
+        <div class="message-input-container">
+            <input type="text" [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" placeholder="Type a message..."
+                class="message-input" />
+            <button class="btn btn-primary send-btn" (click)="sendMessage()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+                Send
+            </button>
+        </div>
+
+        <div class="exit-container">
+            <button class="btn btn-secondary exit-btn" (click)="exitRoom()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                    <polyline points="16 17 21 12 16 7"></polyline>
+                    <line x1="21" y1="12" x2="9" y2="12"></line>
+                </svg>
+                Exit Room
+            </button>
         </div>
     </div>
 </div>

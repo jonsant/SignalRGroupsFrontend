@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SignalRService } from '../../services/signalr.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
     selector: 'app-join-group',
@@ -14,32 +15,39 @@ import { SignalRService } from '../../services/signalr.service';
 export class JoinGroupComponent {
     username: string = '';
     joinGroupName: string = '';
+    isJoining: boolean = false;
 
     constructor(
         private signalRService: SignalRService,
-        private router: Router
+        private router: Router,
+        private snackbarService: SnackbarService
     ) { }
 
     onJoinGroupWithDetails(): void {
         if (!this.username.trim()) {
-            alert('Please enter a username');
+            this.snackbarService.show('Please enter a username');
             return;
         }
 
         if (!this.joinGroupName.trim()) {
-            alert('Please enter a group name');
+            this.snackbarService.show('Please enter a group name');
             return;
         }
 
         const groupNameNumber = parseInt(this.joinGroupName, 10);
         if (isNaN(groupNameNumber)) {
-            alert('Group name must be a valid number');
+            this.snackbarService.show('Group name must be a valid number');
             return;
         }
 
-        console.log('Joining group:', groupNameNumber, 'as user:', this.username);
+        console.log('Connecting to SignalR and joining group:', groupNameNumber, 'as user:', this.username);
 
-        this.signalRService.invokeHubMethod('JoinChatGroup', groupNameNumber.toString(), this.username)
+        this.isJoining = true;
+        this.signalRService.startConnection()
+            .then(() => {
+                console.log('Successfully connected to chatHub');
+                return this.signalRService.invokeHubMethod('JoinChatGroup', groupNameNumber.toString(), this.username);
+            })
             .then(() => {
                 console.log('Successfully joined group');
                 // Save group name and username to session storage
@@ -47,13 +55,15 @@ export class JoinGroupComponent {
                 sessionStorage.setItem('username', this.username);
                 // Set joined group in SignalRService
                 this.signalRService.setJoinedGroup(groupNameNumber.toString(), this.username);
+                this.isJoining = false;
                 this.router.navigate(['/group', groupNameNumber], {
                     state: { username: this.username }
                 });
             })
             .catch((error) => {
                 console.error('Error joining chat group:', error);
-                alert('Failed to join chat group. Please try again.');
+                this.isJoining = false;
+                this.snackbarService.show('Failed to join chat group. Please try again.');
             });
     }
 }

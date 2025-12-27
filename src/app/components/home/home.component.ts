@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SignalRService } from '../../services/signalr.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
     selector: 'app-home',
@@ -11,13 +12,13 @@ import { SignalRService } from '../../services/signalr.service';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent {
-    title = 'SignalR Chat Groups';
+    title = 'Chat Groups';
     connectionStatus: string = 'Disconnected';
-    isConnecting: boolean = false;
 
     constructor(
         private signalRService: SignalRService,
-        private router: Router
+        private router: Router,
+        private snackbarService: SnackbarService
     ) {
         this.signalRService.connectionStatus$.subscribe(status => {
             this.connectionStatus = status;
@@ -25,32 +26,10 @@ export class HomeComponent {
     }
 
     onCreateGroup(): void {
-        this.isConnecting = true;
-        this.signalRService.startConnection()
-            .then(() => {
-                console.log('Successfully connected to chatHub');
-                this.isConnecting = false;
-                this.router.navigate(['/create-group']);
-            })
-            .catch(error => {
-                console.error('Failed to connect:', error);
-                this.isConnecting = false;
-                alert('Failed to connect to the chat hub. Please check if the server is running.');
-            });
+        this.router.navigate(['/create-group']);
     }
 
     onJoinGroup(): void {
-        this.isConnecting = true;
-        this.signalRService.startConnection()
-            .then(() => {
-                console.log('Successfully connected to chatHub');
-                this.isConnecting = false;
-                this.router.navigate(['/join-group']);
-            })
-            .catch(error => {
-                console.error('Failed to connect:', error);
-                this.isConnecting = false;
-                alert('Failed to connect to the chat hub. Please check if the server is running.');
-            });
+        this.router.navigate(['/join-group']);
     }
 }
