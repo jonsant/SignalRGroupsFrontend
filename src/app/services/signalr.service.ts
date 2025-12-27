@@ -14,6 +14,9 @@ export class SignalRService {
     private messageSubject = new Subject<{ username: string; message: string }>();
     public message$: Observable<{ username: string; message: string }> = this.messageSubject.asObservable();
 
+    private groupMembersSubject = new BehaviorSubject<string[]>([]);
+    public currentGroupMembers$: Observable<string[]> = this.groupMembersSubject.asObservable();
+
     public connectionStatus$ = this.connectionStatus.asObservable();
 
 
@@ -47,6 +50,8 @@ export class SignalRService {
                 this.connectionStatus.next('Connected');
                 // Register ReceiveMessage handler
                 this.registerReceiveMessageHandler();
+                // Register GroupMembersChanged handler
+                this.registerGroupMembersChangedHandler();
             })
             .catch(err => {
                 console.error('Error while starting SignalR connection: ', err);
@@ -58,6 +63,14 @@ export class SignalRService {
         if (this.hubConnection) {
             this.hubConnection.on('ReceiveMessage', (username: string, message: string) => {
                 this.messageSubject.next({ username, message });
+            });
+        }
+    }
+
+    private registerGroupMembersChangedHandler(): void {
+        if (this.hubConnection) {
+            this.hubConnection.on('GroupMembersChanged', (members: string[]) => {
+                this.groupMembersSubject.next(members);
             });
         }
     }

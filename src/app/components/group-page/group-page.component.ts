@@ -18,8 +18,10 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     groupName: number | null = null;
     username: string = '';
     chatMessages: { username: string; message: string }[] = [];
+    groupMembers: string[] = [];
     newMessage: string = '';
     private messageSub?: Subscription;
+    private membersSub?: Subscription;
     private shouldScroll = false;
 
     constructor(
@@ -69,6 +71,11 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.chatMessages.push(msg);
             this.shouldScroll = true;
         });
+
+        // Subscribe to group members changes
+        this.membersSub = this.signalRService.currentGroupMembers$.subscribe(members => {
+            this.groupMembers = members;
+        });
     }
 
     GoHome() {
@@ -79,6 +86,7 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
 
     ngOnDestroy(): void {
         this.messageSub?.unsubscribe();
+        this.membersSub?.unsubscribe();
     }
 
     ngAfterViewChecked(): void {

@@ -252,6 +252,23 @@ h1 {
   margin-bottom: 10px;
 }
 
+.members-list {
+  background: #f8f9fa;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 14px;
+}
+
+.members-list strong {
+  color: #11998e;
+  margin-right: 8px;
+}
+
+.member-names {
+  color: #666;
+}
+
 .welcome-message {
   color: #666;
   font-size: 14px;

@@ -18,6 +18,16 @@
 
     <div class="chat-container">
         <h2>Chat Room</h2>
+        <div class="members-list">
+            <strong>Members ({{ groupMembers.length }}):</strong>
+            <span class="member-names">
+                @if (groupMembers.length > 0) {
+                {{ groupMembers.join(', ') }}
+                } @else {
+                No members yet
+                }
+            </span>
+        </div>
         <p class="welcome-message">Welcome, {{ username }}!</p>
         <div class="chat-messages" #messagesContainer>
             @for (msg of chatMessages; track msg) {
