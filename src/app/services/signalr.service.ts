@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as signalR from '@microsoft/signalr';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 
 import { Subject, Observable } from 'rxjs';
 
@@ -11,7 +11,7 @@ export class SignalRService {
     private hubConnection: signalR.HubConnection | null = null;
     private connectionStatus = new BehaviorSubject<string>('Disconnected');
 
-    private messageSubject = new Subject<{ username: string; message: string }>();
+    private messageSubject = new ReplaySubject<{ username: string; message: string }>(100);
     public message$: Observable<{ username: string; message: string }> = this.messageSubject.asObservable();
 
     private groupMembersSubject = new BehaviorSubject<string[]>([]);
