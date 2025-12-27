@@ -4,7 +4,13 @@
     <div class="form-container">
         <div class="form-group">
             <label for="username">Username</label>
-            <input type="text" id="username" [(ngModel)]="username" placeholder="Enter your username" class="form-input"
+            <input type="text" id="username" [(ngModel)]="username" placeholder="Enter your username"
+                class="form-input">
+        </div>
+
+        <div class="form-group">
+            <label for="password">Global passcode</label>
+            <input type="password" id="password" [(ngModel)]="password" placeholder="..." class="form-input"
                 (keyup.enter)="onCreateGroupWithUsername()">
         </div>
 
