@@ -30,6 +30,11 @@ export class CreateGroupComponent {
         this.signalRService.invokeHubMethod<number>('CreateChatGroup', this.username)
             .then((response) => {
                 console.log('Chat group created successfully:', response);
+                // Save group name and username to session storage
+                sessionStorage.setItem('groupName', response.toString());
+                sessionStorage.setItem('username', this.username);
+                // Set joined group in SignalRService
+                this.signalRService.setJoinedGroup(response.toString(), this.username);
                 this.router.navigate(['/group', response], {
                     state: { username: this.username }
                 });

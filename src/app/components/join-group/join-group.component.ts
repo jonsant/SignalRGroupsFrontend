@@ -39,9 +39,14 @@ export class JoinGroupComponent {
 
         console.log('Joining group:', groupNameNumber, 'as user:', this.username);
 
-        this.signalRService.invokeHubMethod('JoinChatGroup', this.username, groupNameNumber)
+        this.signalRService.invokeHubMethod('JoinChatGroup', groupNameNumber.toString(), this.username)
             .then(() => {
                 console.log('Successfully joined group');
+                // Save group name and username to session storage
+                sessionStorage.setItem('groupName', groupNameNumber.toString());
+                sessionStorage.setItem('username', this.username);
+                // Set joined group in SignalRService
+                this.signalRService.setJoinedGroup(groupNameNumber.toString(), this.username);
                 this.router.navigate(['/group', groupNameNumber], {
                     state: { username: this.username }
                 });
