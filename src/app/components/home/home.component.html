@@ -1,6 +1,25 @@
 <div class="card">
     <h1>{{ title }}</h1>
 
+    @if (!authorized) {
+    <div class="form-container">
+        <div class="form-group">
+            <label for="passcode">Enter Passcode:</label>
+            <input type="password" id="passcode" [(ngModel)]="passcode" placeholder="Enter passcode" class="form-input"
+                [disabled]="loading" (keyup.enter)="onEnterPasscode()">
+        </div>
+
+        <button class="btn btn-primary" (click)="onEnterPasscode()" [disabled]="loading || !passcode">
+            {{ loading ? 'Verifying...' : 'Enter' }}
+        </button>
+
+        @if (errorMsg) {
+        <div class="error-msg">{{ errorMsg }}</div>
+        }
+    </div>
+    }
+
+    @if (authorized) {
     <div class="button-container">
         <button class="btn btn-primary" (click)="onCreateGroup()">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
@@ -22,4 +41,5 @@
             Join Chat Group
         </button>
     </div>
+    }
 </div>

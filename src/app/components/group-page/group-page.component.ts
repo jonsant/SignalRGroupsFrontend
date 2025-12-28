@@ -47,10 +47,11 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
         if (!this.signalRService.hasJoinedGroup()) {
             const storedGroupName = sessionStorage.getItem('groupName');
             const storedUsername = sessionStorage.getItem('username');
-            if (storedGroupName && storedUsername) {
+            const storedPasscode = sessionStorage.getItem('passcode');
+            if (storedGroupName && storedUsername && storedPasscode) {
                 this.groupName = +storedGroupName;
                 this.username = storedUsername;
-                this.signalRService.invokeHubMethod('JoinChatGroup', storedGroupName, storedUsername)
+                this.signalRService.invokeHubMethod('JoinChatGroup', storedGroupName, storedUsername, storedPasscode)
                     .then(() => {
                         console.log('Joined group after refresh or direct load');
                     })
@@ -117,9 +118,11 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
             return;
         }
 
-        this.signalRService.invokeHubMethod('SendMessageToGroup', this.groupName.toString(), this.username, this.newMessage)
+        const messageToSend = this.newMessage;
+        this.newMessage = '';
+
+        this.signalRService.invokeHubMethod('SendMessageToGroup', this.groupName.toString(), this.username, messageToSend)
             .then(() => {
-                this.newMessage = '';
                 this.shouldScroll = true;
             })
             .catch((error) => {

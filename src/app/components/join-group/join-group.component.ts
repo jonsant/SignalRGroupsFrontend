@@ -15,7 +15,6 @@ import { SnackbarService } from '../../services/snackbar.service';
 export class JoinGroupComponent {
     username: string = '';
     joinGroupName: string = '';
-    password: string = '';
     isJoining: boolean = false;
 
     constructor(
@@ -35,8 +34,10 @@ export class JoinGroupComponent {
             return;
         }
 
-        if (!this.password.trim()) {
-            this.snackbarService.show('Please enter the global passcode');
+        const password = sessionStorage.getItem('passcode');
+        if (!password) {
+            this.snackbarService.show('No passcode found. Please authorize first.');
+            this.router.navigate(['/']);
             return;
         }
 
@@ -52,7 +53,7 @@ export class JoinGroupComponent {
         this.signalRService.startConnection()
             .then(() => {
                 console.log('Successfully connected to chatHub');
-                return this.signalRService.invokeHubMethod('JoinChatGroup', groupNameNumber.toString(), this.username, this.password);
+                return this.signalRService.invokeHubMethod('JoinChatGroup', groupNameNumber.toString(), this.username, password);
             })
             .then(() => {
                 console.log('Successfully joined group');
