@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewChecked }
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SignalRService } from '../../services/signalr.service';
-import { SnackbarService } from '../../services/snackbar.service';
+import { ChatGroupSignalrService } from '../../../services/chat-group-signalr.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -27,7 +27,7 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
     constructor(
         private route: ActivatedRoute,
         private router: Router,
-        private signalRService: SignalRService,
+        private signalRService: ChatGroupSignalrService,
         private snackbarService: SnackbarService
     ) { }
 

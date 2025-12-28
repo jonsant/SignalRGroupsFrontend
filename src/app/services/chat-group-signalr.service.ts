@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 @Injectable({
     providedIn: 'root'
 })
-export class SignalRService {
+export class ChatGroupSignalrService {
     private hubConnection: signalR.HubConnection | null = null;
     private connectionStatus = new BehaviorSubject<string>('Disconnected');
 

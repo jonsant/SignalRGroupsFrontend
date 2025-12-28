@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SignalRService } from '../../services/signalr.service';
-import { SnackbarService } from '../../services/snackbar.service';
+import { ChatGroupSignalrService } from '../../../services/chat-group-signalr.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
     selector: 'app-join-group',
@@ -18,7 +18,7 @@ export class JoinGroupComponent {
     isJoining: boolean = false;
 
     constructor(
-        private signalRService: SignalRService,
+        private signalRService: ChatGroupSignalrService,
         private router: Router,
         private snackbarService: SnackbarService
     ) { }

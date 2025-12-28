@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SignalRService } from '../../services/signalr.service';
+import { ChatGroupSignalrService } from '../../services/chat-group-signalr.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { ApiService } from '../../services/api.service';
 
@@ -17,12 +17,11 @@ export class HomeComponent implements OnInit {
     title = 'Chat Groups';
     connectionStatus: string = 'Disconnected';
     passcode: string = '';
-    authorized: boolean = false;
     loading: boolean = false;
     errorMsg: string = '';
 
     constructor(
-        private signalRService: SignalRService,
+        private signalRService: ChatGroupSignalrService,
         private router: Router,
         private snackbarService: SnackbarService,
         private apiService: ApiService
@@ -40,8 +39,8 @@ export class HomeComponent implements OnInit {
             this.loading = true;
             this.apiService.Authorize(storedPasscode).subscribe({
                 next: () => {
-                    this.authorized = true;
-                    this.loading = false;
+                    // Navigate to menu instead of showing buttons
+                    this.router.navigate(['/menu']);
                 },
                 error: (err) => {
                     // If stored passcode is invalid, clear it
@@ -64,23 +63,15 @@ export class HomeComponent implements OnInit {
 
         this.apiService.Authorize(this.passcode).subscribe({
             next: () => {
-                this.authorized = true;
-                this.loading = false;
                 // Save passcode to session storage
                 sessionStorage.setItem('passcode', this.passcode);
+                // Navigate to menu
+                this.router.navigate(['/menu']);
             },
             error: (err) => {
                 this.errorMsg = 'Authorization failed. Please check your passcode.';
                 this.loading = false;
             }
         });
-    }
-
-    onCreateGroup(): void {
-        this.router.navigate(['/create-group']);
-    }
-
-    onJoinGroup(): void {
-        this.router.navigate(['/join-group']);
     }
 }
