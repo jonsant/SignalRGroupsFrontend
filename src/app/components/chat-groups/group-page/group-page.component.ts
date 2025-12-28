@@ -43,10 +43,10 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.username = navigation.username;
         }
 
-        this.signalRService.clearGroupData();
 
         // If not already joined, check sessionStorage and try to join
         if (!this.signalRService.hasJoinedGroup()) {
+            this.signalRService.clearGroupData();
             const storedGroupName = sessionStorage.getItem('groupName');
             const storedUsername = sessionStorage.getItem('username');
             const storedPasscode = sessionStorage.getItem('passcode');

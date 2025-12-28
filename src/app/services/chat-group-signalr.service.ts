@@ -113,6 +113,6 @@ export class ChatGroupSignalrService {
         this.groupMembersSubject.next([]);
         this.messageSubject = new ReplaySubject<{ username: string; message: string }>(100);
         this.message$ = this.messageSubject.asObservable();
-        this.joinedGroup = null;
+        // this.joinedGroup = null;
     }
 }
