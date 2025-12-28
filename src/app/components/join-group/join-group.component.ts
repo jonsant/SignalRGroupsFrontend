@@ -30,7 +30,7 @@ export class JoinGroupComponent {
         }
 
         if (!this.joinGroupName.trim()) {
-            this.snackbarService.show('Please enter a group name');
+            this.snackbarService.show('Please enter a group number');
             return;
         }
 
@@ -43,7 +43,7 @@ export class JoinGroupComponent {
 
         const groupNameNumber = parseInt(this.joinGroupName, 10);
         if (isNaN(groupNameNumber)) {
-            this.snackbarService.show('Group name must be a valid number');
+            this.snackbarService.show('Group number must be a valid number');
             return;
         }
 

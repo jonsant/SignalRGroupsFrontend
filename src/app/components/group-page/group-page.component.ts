@@ -139,7 +139,7 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
                 })
                 .catch(err => {
                     console.error('Failed to copy:', err);
-                    this.snackbarService.show('Failed to copy group name');
+                    this.snackbarService.show('Failed to copy group number');
                 });
         }
     }
