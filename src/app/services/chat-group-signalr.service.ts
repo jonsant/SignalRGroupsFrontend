@@ -108,4 +108,11 @@ export class ChatGroupSignalrService {
         }
         return this.hubConnection!.invoke<T>(methodName, ...args);
     }
+
+    public clearGroupData(): void {
+        this.groupMembersSubject.next([]);
+        this.messageSubject = new ReplaySubject<{ username: string; message: string }>(100);
+        this.message$ = this.messageSubject.asObservable();
+        this.joinedGroup = null;
+    }
 }

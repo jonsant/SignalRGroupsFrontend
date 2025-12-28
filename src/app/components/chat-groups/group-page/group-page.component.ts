@@ -43,6 +43,8 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.username = navigation.username;
         }
 
+        this.signalRService.clearGroupData();
+
         // If not already joined, check sessionStorage and try to join
         if (!this.signalRService.hasJoinedGroup()) {
             const storedGroupName = sessionStorage.getItem('groupName');
@@ -154,6 +156,7 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
             .then(() => {
                 sessionStorage.removeItem('groupName');
                 sessionStorage.removeItem('username');
+                this.signalRService.clearGroupData();
                 return this.signalRService.stopConnection();
             })
             .then(() => {
@@ -164,6 +167,7 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
                 // Clear session and navigate anyway
                 sessionStorage.removeItem('groupName');
                 sessionStorage.removeItem('username');
+                this.signalRService.clearGroupData();
                 this.signalRService.stopConnection()
                     .finally(() => {
                         this.router.navigate(['/']);
