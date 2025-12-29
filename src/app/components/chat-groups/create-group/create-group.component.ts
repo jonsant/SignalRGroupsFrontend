@@ -28,12 +28,7 @@ export class CreateGroupComponent {
             return;
         }
 
-        const password = sessionStorage.getItem('passcode');
-        if (!password) {
-            this.snackbarService.show('No passcode found. Please authorize first.');
-            this.router.navigate(['/']);
-            return;
-        }
+        const password = sessionStorage.getItem('passcode') || '';
 
         this.isCreating = true;
         console.log('Connecting to SignalR and creating group with username:', this.username);

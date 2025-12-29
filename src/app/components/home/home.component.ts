@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ChatGroupSignalrService } from '../../services/chat-group-signalr.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { ApiService } from '../../services/api.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
     selector: 'app-home',
@@ -19,6 +20,7 @@ export class HomeComponent implements OnInit {
     passcode: string = '';
     loading: boolean = false;
     errorMsg: string = '';
+    requirePasscode = environment.requirePasscode;
 
     constructor(
         private signalRService: ChatGroupSignalrService,
@@ -32,6 +34,13 @@ export class HomeComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        // If passcode not required, skip directly to menu
+        if (!this.requirePasscode) {
+            sessionStorage.setItem('passcode', '');
+            this.router.navigate(['/menu']);
+            return;
+        }
+
         // Check session storage for existing passcode
         const storedPasscode = sessionStorage.getItem('passcode');
         if (storedPasscode) {

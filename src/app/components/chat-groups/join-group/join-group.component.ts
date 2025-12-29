@@ -34,12 +34,7 @@ export class JoinGroupComponent {
             return;
         }
 
-        const password = sessionStorage.getItem('passcode');
-        if (!password) {
-            this.snackbarService.show('No passcode found. Please authorize first.');
-            this.router.navigate(['/']);
-            return;
-        }
+        const password = sessionStorage.getItem('passcode') || '';
 
         const groupNameNumber = parseInt(this.joinGroupName, 10);
         if (isNaN(groupNameNumber)) {

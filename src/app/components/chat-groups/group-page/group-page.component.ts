@@ -49,8 +49,8 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
             this.signalRService.clearGroupData();
             const storedGroupName = sessionStorage.getItem('groupName');
             const storedUsername = sessionStorage.getItem('username');
-            const storedPasscode = sessionStorage.getItem('passcode');
-            if (storedGroupName && storedUsername && storedPasscode) {
+            const storedPasscode = sessionStorage.getItem('passcode') || '';
+            if (storedGroupName && storedUsername) {
                 this.groupName = +storedGroupName;
                 this.username = storedUsername;
                 this.signalRService.invokeHubMethod('JoinChatGroup', storedGroupName, storedUsername, storedPasscode)
