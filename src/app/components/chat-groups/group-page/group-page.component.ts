@@ -137,11 +137,11 @@ export class GroupPageComponent implements OnInit, OnDestroy, AfterViewChecked {
         if (this.groupName !== null) {
             navigator.clipboard.writeText(this.groupName.toString())
                 .then(() => {
-                    this.snackbarService.show('Group number was copied!');
+                    this.snackbarService.show('Room number was copied!');
                 })
                 .catch(err => {
                     console.error('Failed to copy:', err);
-                    this.snackbarService.show('Failed to copy group number');
+                    this.snackbarService.show('Failed to copy room number');
                 });
         }
     }
