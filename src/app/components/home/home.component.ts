@@ -15,7 +15,7 @@ import { environment } from '../../../environments/environment';
     styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    title = 'Chat Groups';
+    title = 'Groups';
     connectionStatus: string = 'Disconnected';
     passcode: string = '';
     loading: boolean = false;
